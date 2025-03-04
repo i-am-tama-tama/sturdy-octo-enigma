@@ -83,9 +83,8 @@
         });
         
         function placeDot() {
-            const data = { x: relativeX, y: relativeY };
             if (window.Telegram && window.Telegram.WebApp) {
-                Telegram.WebApp.sendData(data.x+"|"+data.y);
+                Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
                 Telegram.WebApp.close();
             } else {
                 alert(`Точка установлена в координатах: X=${relativeX}, Y=${relativeY}`);

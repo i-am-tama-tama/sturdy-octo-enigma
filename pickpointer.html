@@ -12,8 +12,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            /* height: 100vh; */
+            background-color: black;
         }
         .container {
             position: relative;
@@ -46,10 +46,10 @@
 </head>
 <body>
     <div class="container" id="imageContainer"></div>
-    <button class="button" onclick="placeDot()">Поставить</button>
+    <!-- <button class="button" onclick="placeDot()">Поставить</button> -->
 
     <script>
-        Telegram.WebApp.ready();
+        alert(Telegram.WebApp.ready());
         Telegram.WebApp.MainButton.isVisible = true;
         Telegram.WebApp.MainButton.onClick = function() {
             placeDot();
@@ -88,12 +88,12 @@
         });
         
         function placeDot() {
-            // if (window.Telegram && window.Telegram.WebApp) {
+            if (Еelegram && Telegram.WebApp) {
                 Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
-                // Telegram.WebApp.close();
-            // } else {
+                Telegram.WebApp.close();
+            } else {
                 alert(`Точка установлена в координатах: X=${relativeX}, Y=${relativeY}`);
-            // }
+            }
         }
     </script>
 </body>

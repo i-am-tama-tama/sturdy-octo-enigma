@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Координаты точки</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            position: relative;
+            width: 100vw;
+            height: calc(100vw * 800 / 1280);
+            background: center/cover no-repeat;
+            border: 1px solid #000;
+        }
+        .dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="imageContainer"></div>
+    <button class="button" onclick="placeDot()">Поставить</button>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const imageUrl = getQueryParam('image') || 'default-image.jpg';
+        const container = document.getElementById('imageContainer');
+        container.style.backgroundImage = `url('${imageUrl}')`;
+
+        let dot = null;
+        let relativeX = 0;
+        let relativeY = 0;
+
+        container.addEventListener('click', function(event) {
+            const rect = container.getBoundingClientRect();
+            const scaleX = 1280 / rect.width;
+            const scaleY = 800 / rect.height;
+            
+            relativeX = Math.round((event.clientX - rect.left) * scaleX);
+            relativeY = Math.round((event.clientY - rect.top) * scaleY);
+            
+            if (!dot) {
+                dot = document.createElement('div');
+                dot.classList.add('dot');
+                container.appendChild(dot);
+            }
+            
+            dot.style.left = `${event.clientX - rect.left}px`;
+            dot.style.top = `${event.clientY - rect.top}px`;
+            
+            console.log(`Координаты: X=${relativeX}, Y=${relativeY}`);
+        });
+        
+        function placeDot() {
+            const data = { x: relativeX, y: relativeY };
+            if (window.Telegram && window.Telegram.WebApp) {
+                Telegram.WebApp.sendData(data.x+"|"+data.y);
+                Telegram.WebApp.close();
+            } else {
+                alert(`Точка установлена в координатах: X=${relativeX}, Y=${relativeY}`);
+            }
+        }
+    </script>
+</body>
+</html>

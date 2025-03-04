@@ -49,6 +49,11 @@
     <button class="button" onclick="placeDot()">Поставить</button>
 
     <script>
+        Telegram.WebApp.ready();
+        Telegram.WebApp.MainButton.isVisible = true;
+        Telegram.WebApp.MainButton.onClick = function() {
+            placeDot();
+        };
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);

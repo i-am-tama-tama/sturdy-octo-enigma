@@ -49,15 +49,18 @@
     <!-- <button class="button" onclick="placeDot()">Поставить</button> -->
 
     <script>
-        // alert(Telegram.WebApp.ready());
-        window.Telegram.WebApp.MainButton.isVisible = true;
-        window.Telegram.WebApp.MainButton.text = 'Отправить';
-        window.Telegram.WebApp.MainButton.onClick = function() {
+     // Инициализация WebApp
+        Telegram.WebApp.ready();
+        Telegram.WebApp.MainButton.setText('Отправить');
+        Telegram.WebApp.MainButton.show();
+
+        // Регистрируем обработчик события нажатия
+        Telegram.WebApp.onEvent('mainButtonClicked', function() {
             alert("ONMAINBUTTONCLICK");
             placeDot();
-        };
+        });
         function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
+            const urlParams = new URLSearchParams(location.search);
             return urlParams.get(param);
         }
 
@@ -90,13 +93,15 @@
         });
         
         function placeDot() {
-            if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
-                window.Telegram.WebApp.close();
-            } else {
+            // if (Telegram && Telegram.WebApp) {
+                Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
+                Telegram.WebApp.close();
+            // } else {
                 alert(`Точка установлена в координатах: X=${relativeX}, Y=${relativeY}`);
-            }
+            // }
         }
+
+        alert("HELLO");
     </script>
 </body>
 </html>

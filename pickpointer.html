@@ -12,7 +12,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* height: 100vh; */
+            height: 100vh;
             background-color: black;
         }
         .container {
@@ -51,7 +51,9 @@
     <script>
         alert(Telegram.WebApp.ready());
         Telegram.WebApp.MainButton.isVisible = true;
+        Telegram.WebApp.MainButton.text = 'Отправить';
         Telegram.WebApp.MainButton.onClick = function() {
+            alert("ONMAINBUTTONCLICK");
             placeDot();
         };
         function getQueryParam(param) {

@@ -49,10 +49,10 @@
     <!-- <button class="button" onclick="placeDot()">Поставить</button> -->
 
     <script>
-        alert(Telegram.WebApp.ready());
-        Telegram.WebApp.MainButton.isVisible = true;
-        Telegram.WebApp.MainButton.text = 'Отправить';
-        Telegram.WebApp.MainButton.onClick = function() {
+        // alert(Telegram.WebApp.ready());
+        window.Telegram.WebApp.MainButton.isVisible = true;
+        window.Telegram.WebApp.MainButton.text = 'Отправить';
+        window.Telegram.WebApp.MainButton.onClick = function() {
             alert("ONMAINBUTTONCLICK");
             placeDot();
         };
@@ -90,9 +90,9 @@
         });
         
         function placeDot() {
-            if (Еelegram && Telegram.WebApp) {
-                Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
-                Telegram.WebApp.close();
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
+                window.Telegram.WebApp.close();
             } else {
                 alert(`Точка установлена в координатах: X=${relativeX}, Y=${relativeY}`);
             }

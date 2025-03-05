@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Координаты точки</title>
+    <title>Поставить указатель</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
@@ -46,17 +46,14 @@
 </head>
 <body>
     <div class="container" id="imageContainer"></div>
-    <!-- <button class="button" onclick="placeDot()">Поставить</button> -->
 
     <script>
      // Инициализация WebApp
         Telegram.WebApp.ready();
         Telegram.WebApp.MainButton.setText('Отправить');
-        Telegram.WebApp.MainButton.show();
 
         // Регистрируем обработчик события нажатия
         Telegram.WebApp.onEvent('mainButtonClicked', function() {
-            alert("ONMAINBUTTONCLICK");
             placeDot();
         });
         function getQueryParam(param) {
@@ -73,6 +70,7 @@
         let relativeY = 0;
 
         container.addEventListener('click', function(event) {
+            Telegram.WebApp.MainButton.show();
             const rect = container.getBoundingClientRect();
             const scaleX = 1280 / rect.width;
             const scaleY = 800 / rect.height;
@@ -88,20 +86,12 @@
             
             dot.style.left = `${event.clientX - rect.left}px`;
             dot.style.top = `${event.clientY - rect.top}px`;
-            
-            console.log(`Координаты: X=${relativeX}, Y=${relativeY}`);
         });
         
         function placeDot() {
-            // if (Telegram && Telegram.WebApp) {
-                Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
-                Telegram.WebApp.close();
-            // } else {
-                alert(`Точка установлена в координатах: X=${relativeX}, Y=${relativeY}`);
-            // }
+            Telegram.WebApp.sendData(JSON.stringify({ x: relativeX, y: relativeY }));
+            Telegram.WebApp.close();
         }
-
-        alert("HELLO");
     </script>
 </body>
 </html>
